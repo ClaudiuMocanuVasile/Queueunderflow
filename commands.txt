@@ -1,0 +1,21 @@
+Commands
+
+HOW TO START VIRTUAL ENVIRONMENT // in main folder
+.\scripts\activate
+
+HOW TO START DJANGO SERVER // in stackoverflow_django
+python manage.py runserver
+
+HOW TO MAKE MIGRATIONS AFTER CHANGES TO DATABASE // in stackoverflow_django
+python manage.py makemigrations
+python manage.py migrate
+
+HOW TO START VUE SERVER // in stackoverflow_vue
+npm run serve
+
+HOW TO INSTALL PYTHON PROJECT REQS IN VENV // in main folder
+first start venv
+python -m pip install -r requirements.txt
+
+HOW TO INSTALL NODE MODULES
+???????????????????????
