@@ -1,7 +1,13 @@
 Commands
 
+HOW TO CREATE VIRTUAL ENVIRONMENT // in main folder
+py -m venv venv
+
 HOW TO START VIRTUAL ENVIRONMENT // in main folder
-.\scripts\activate
+venv\Scripts\activate
+
+HOW TO EXIT VIRTUAL ENVIRONMENT // in main folder
+deactivate
 
 HOW TO START DJANGO SERVER // in stackoverflow_django
 python manage.py runserver
