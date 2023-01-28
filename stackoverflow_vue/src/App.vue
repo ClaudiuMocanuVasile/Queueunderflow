@@ -18,6 +18,7 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
+
                     <div class="collapse navbar-collapse text-end" id="navbarSupportedContent"
                         v-if="!isLoginPage && !isRegisterPage">
                         <div class="navbar-nav">
@@ -102,13 +103,13 @@
 
                                             <input class="form-control me-2" type="search"
                                                 placeholder="Search topic or question..." aria-label="Search">
-                                            <button class="btn btn-outline-light mx-2" type="submit">Search</button>
+                                            <button class="btn btn-outline-light mx-2 border-secondary" type="submit">Search</button>
 
 
                                         </form>
                                     </div>
                                     <div class="navbar-nav">
-                                        <router-link to="" class="nav-link nav-link-white-gray mx-3 mx-xl-0 p-0"
+                                        <router-link to="profile" class="nav-link nav-link-white-gray mx-3 mx-xl-0 p-0"
                                             href="#">
                                             <div class="mx-2 d-flex justify-content-center d-none d-xl-block">
 
@@ -143,7 +144,7 @@
             <!-- Footer -->
             <footer class="text-center text-lg-start bg-dark text-white">
                 <!-- Section: Social media -->
-                <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
+                <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom border-secondary">
                     <!-- Left -->
                     <div class="me-5 d-none d-lg-block">
                         <span>Get connected with us on social networks:</span>
