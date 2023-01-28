@@ -1,5 +1,5 @@
 <template>
-    <div class="home">
+    <div class="category">
 
     </div>
 </template>
@@ -7,7 +7,7 @@
 <script>
 
 export default {
-    name: 'HomeView',
+    name: 'CategoryView',
     components: {
     }
 }

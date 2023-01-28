@@ -7,7 +7,7 @@
 <script>
 
 export default {
-    name: 'HomeView',
+    name: 'QuestionView',
     components: {
     }
 }
