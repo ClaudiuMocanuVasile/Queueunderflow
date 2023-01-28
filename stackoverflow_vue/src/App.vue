@@ -18,7 +18,8 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-                    <div class="collapse navbar-collapse text-end" id="navbarSupportedContent">
+                    <div class="collapse navbar-collapse text-end" id="navbarSupportedContent"
+                        v-if="!isLoginPage && !isRegisterPage">
                         <div class="navbar-nav">
                             <router-link to="" class="nav-link nav-link-white-gray mx-3 mx-xl-0 p-0" href="#">
                                 <div class="mx-2 d-flex justify-content-end d-xl-none mt-xl-0 mt-2">
@@ -276,9 +277,18 @@
 export default {
     data() {
         return {
-
+            isLoginPage: false,
+            isRegisterPage: false
         }
+    },
+    computed: {
+    isLoginPage() {
+      return this.$route.path === '/login'
+    },
+    isRegisterPage(){
+        return this.$route.path === '/register'
     }
+  }
 }
 </script>
 
