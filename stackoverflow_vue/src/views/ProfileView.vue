@@ -78,10 +78,12 @@
                     <div class="tab-content" id="ex1-content">
 
                         <!-- About -->
-                        <div class="tab-pane fade show active" id="profile-info" role="tabpanel" aria-labelledby="profile-info">
+                        <div class="tab-pane fade show active" id="profile-info" role="tabpanel"
+                            aria-labelledby="profile-info">
                             <div class="card-body text-black">
                                 <div class="py-2">
-                                    <p class="font-italic mb-1" id="user_description"> [Aci campul "description" de la fiecare user]</p>
+                                    <p class="font-italic mb-1" id="user_description"> [Aci campul "description" de la
+                                        fiecare user]</p>
                                     <p class="font-italic mb-4 mt-4"><span style="color: blue">Birthday:</span>
                                         10/04/2000</p>
                                 </div>
@@ -91,17 +93,103 @@
                         <!-- Questions posted -->
                         <div class="tab-pane fade" id="questions-posted" role="tabpanel"
                             aria-labelledby="questions-posted">
-                            questions-posted
+
+                            <div class="card mb-3">
+                                
+                                <!-- Pentru fiecare intrebare a userului din baza de date, se va insera template-ul asta *preferabil din JavaScript*-->
+                                <!-- Question element exemplu 1-->
+                                <div class="row mb-1">
+                                    <!-- Image -->
+                                    <div class="col-md-4">
+                                        <img src="https://t4.ftcdn.net/jpg/01/57/24/19/360_F_157241916_H518BbbcbFavVTRCGjQsYOWGKrc4RGnZ.jpg"
+                                            class="img-fluid rounded-start" alt="">
+                                    </div>
+                                    <!-- Question -->
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h3 class="card-title mt-5 mb-4">Your question:</h3>
+                                            <p class="card-text">Insert question description here... <br></p>
+                                            <a class="card-text text-muted" href="#question_page">Go to question</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Question element exemplu 1 END -->
+
+                                <!-- Question element exemplu 2 -->
+                                <div class="row mb-1">
+                                    <!-- Image -->
+                                    <div class="col-md-4">
+                                        <img src="https://t4.ftcdn.net/jpg/01/57/24/19/360_F_157241916_H518BbbcbFavVTRCGjQsYOWGKrc4RGnZ.jpg"
+                                            class="img-fluid rounded-start" alt="">
+                                    </div>
+                                    <!-- Question -->
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h3 class="card-title mt-5 mb-4">Your question:</h3>
+                                            <p class="card-text"> <br> Hello here is another question. Can penguins fly?</p>
+                                            <a class="card-text text-muted" href="#question_page">Go to question</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Question element exemplu 2 END -->
+
+                            </div>
+
                         </div>
 
                         <!-- Answers given -->
                         <div class="tab-pane fade" id="answers-given" role="tabpanel" aria-labelledby="answers-given">
-                            answers-given
+
+                            <div class="card mb-5">
+                                
+                                <!-- Pentru fiecare raspuns dat de user se va insera template-ul asta *preferabil din JavaScript*-->
+                                <!-- Answer element exemplu 1-->
+                                <div class="row mb-1">
+                                    <!-- Image -->
+                                    <div class="col-md-4 bg-light">
+                                        <img src="https://cdn-icons-png.flaticon.com/512/1293/1293029.png"
+                                            class="img-fluid w-50 h-80 rounded-start mx-auto d-block m-3" alt="">
+                                    </div>
+                                    <!-- Answer -->
+                                    <div class="col-md-8 mb-5">
+                                        <div class="card-body">
+                                            <h3 class="card-title mt-5 mb-4">Question Title</h3>
+                                            <p class="card-text">Insert user answer for this question here... <br></p>
+                                            <p>✦ Upvotes: 5</p>
+                                            <p>✦ Downvotes: 0</p>
+                                            <a class="card-text text-muted mb-5" href="#question_page">See full page</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Answer element exemplu 1 END -->
+
+                                <!-- Answer element exemplu 2 -->
+                                <div class="row mb-1">
+                                    <!-- Image -->
+                                    <div class="col-md-4 bg-light">
+                                        <img src="https://cdn-icons-png.flaticon.com/512/1293/1293029.png"
+                                            class="img-fluid w-50 h-80 rounded-start mx-auto d-block m-3" alt="">
+                                    </div>
+                                    <!-- Answer -->
+                                    <div class="col-md-8 mb-5">
+                                        <div class="card-body">
+                                            <h3 class="card-title mt-5 mb-4">What would you choose, Pepsi or Coca cola?</h3>
+                                            <p class="card-text"> <br> Does it even matter? It's almost the same! But let's go with Pepsi</p>
+                                            <p>✦ Upvotes: 3</p>
+                                            <p>✦ Downvotes: 1</p>
+                                            <a class="card-text text-muted" href="#question_page">See full page</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Answer element exemplu 2 END -->
+
+                            </div>
+
                         </div>
 
                         <!-- Achievements -->
                         <div class="tab-pane fade" id="achievements" role="tabpanel" aria-labelledby="achievements">
-                            achievements
+                            achievements loading...
                         </div>
 
                     </div>
