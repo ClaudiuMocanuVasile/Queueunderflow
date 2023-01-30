@@ -67,7 +67,7 @@
 
                                         <!-- Register buttons -->
                                         <div class="text-center">
-                                            <p>Not a member? <a href="/register">Register here!</a></p>
+                                            <p>Not a member? <a href="#" @click="switchTabToRegister">Register here!</a></p>
                                         </div>
                                     </form>
                                 </div>
@@ -120,7 +120,7 @@
 
                                         <!-- Register buttons -->
                                         <div class="text-center">
-                                            <p>Already a member? <a href="/login">Sign in here!</a></p>
+                                            <p>Already a member? <a href="#" @click="switchTabToLogin">Sign in here!</a></p>
                                         </div>
                                     </form>
                                 </div>
@@ -141,7 +141,16 @@
 export default {
     name: 'LoginRegisterView',
     components: {
+    },
+    methods: {
+    switchTabToRegister() {
+      document.querySelector('#ex1-tab-2').click();
+    },
+    switchTabToLogin() {
+      document.querySelector('#ex1-tab-1').click();
     }
+  }
+
 }
 </script>
 
