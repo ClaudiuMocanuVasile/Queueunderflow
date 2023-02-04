@@ -48,11 +48,11 @@
                                         <hr>
                                         <h1 class="mx-auto">Sign in</h1>
                                         <hr class="mb-4">
-                                        <!-- Email input -->
+                                        <!-- Username input -->
                                         <div class="form-floating form-outline mb-3">
                                            
-                                            <input type="email" id="login_email" v-model="username_login" class="form-control shadow-sm"
-                                                placeholder="Email" /><label class="form-label" for="login_email" >Email</label>
+                                            <input type="username" id="login_username" v-model="username_login" class="form-control shadow-sm"
+                                                placeholder="Username" /><label class="form-label" for="login_username" >Username</label>
                                         </div>
 
                                         <!-- Password input -->
@@ -67,7 +67,7 @@
                                         </div>
 
                                         <!-- Submit button -->
-                                        <button type="button" class="btn btn-dark btn-block mb-4">Sign in</button>
+                                        <button type="submit" class="btn btn-dark btn-block mb-4">Sign in</button>
 
                                         <!-- Register buttons -->
                                         <div class="text-center">
@@ -82,7 +82,7 @@
 
                                     <form @submit.prevent="submitFormRegister" class="login-register-form">
                                         <hr>
-                                        <h1 class="mx-auto">Register</h1>
+                                        <h1 class="mx-auto">Sign Up</h1>
                                         <hr class="hr mb-4">
                                         <!-- Username input -->
                                         <div class="form-floating mb-4">
@@ -98,18 +98,18 @@
                                                 class="form-control shadow-sm" placeholder="Displayed name" /><label class="form-label" for="register_displayedName">Displayed Name</label> 
                                         </div>
 
-                                        <!-- Birthday input -->
-                                        <div class="form-floating mb-4">
-                                            
-                                            <input type="date" id="register_birthday" v-model="birthday" class="form-control shadow-sm"
-                                                min="1900-01-01" max="2023-12-31" /><label class="form-label" for="register_birthday">Birthday</label> 
-                                        </div>
-
                                         <!-- Email input -->
                                         <div class="form-floating mb-4">
                                             
                                             <input type="email" id="register_email" v-model="email" class="form-control shadow-sm"
                                                 placeholder="Email" /><label class="form-label" for="register_email">Email</label> 
+                                        </div>
+
+                                        <!-- Birthday input -->
+                                        <div class="form-floating mb-4">
+                                            
+                                            <input type="date" id="register_birthday" v-model="birthday" class="form-control shadow-sm"
+                                                min="1900-01-01" max="2023-12-31" /><label class="form-label" for="register_birthday">Birthday</label> 
                                         </div>
 
                                         <!-- Password input -->
@@ -131,7 +131,7 @@
                                         </div>
 
                                         <!-- Submit button -->
-                                        <button type="button" class="btn btn-dark btn-block mb-4">Sign in</button>
+                                        <button type="submit" class="btn btn-dark btn-block mb-4">Sign up</button>
 
                                         <!-- Register buttons -->
                                         <div class="text-center">
@@ -184,8 +184,45 @@ export default {
         // document.querySelector('#ex1-tab-1').click();
         // }
 
-        async submitFormLogin() {
+        submitFormLogin() {
+            axios.defaults.headers.common["Authorization"] = ""
 
+            localStorage.removeItem("token")
+
+            const formData = {
+                username: this.username_login,
+                password: this.password_login
+            }
+            
+            axios
+                .post("/api/v1/token/login/", formData)
+                .then(response => {
+                    console.log(response)
+                    const token = response.data.auth_token
+                    
+                    this.$store.commit('setToken', token)
+
+                    axios.defaults.headers.common["Authorization"] = "Token " + token
+
+                    localStorage.setItem("token", token)
+
+                    const toPath = this.$route.query.to || '/home'
+
+                    this.$router.push(toPath)
+                })
+                .catch(error => {
+                    console.log(error)
+                    if(error.response) {
+                        for(const property in error.response.data) {
+                            this.errors.push(`${property}; ${error.response.data[property]}`)
+                        }
+                        
+                    } else {
+                        this.errors.push('Something went wrong. Please try again')
+
+                        console.log(JSON.stringify(error))
+                    }
+                })
         },
 
         submitFormRegister()
@@ -213,14 +250,7 @@ export default {
                 axios
                     .post("/api/v1/users/", formData)
                     .then(response => {
-                        toast({
-                            message: 'Account created, you can now log in.',
-                            type: 'is-success',
-                            dismissible: true,
-                            pauseOnHover: true,
-                            duration: 2000,
-                            position: 'bottom-right'
-                        })
+                        console.log('Account created, you can now log in.')
 
                         this.$router.push('/login')
                     })

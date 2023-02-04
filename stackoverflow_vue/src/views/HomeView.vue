@@ -14,6 +14,11 @@ import QuestionBox from '@/components/QuestionBox.vue'
 
 export default {
     name: 'HomeView',
+    data() {
+        return {
+            latestQuestions: {}
+        }
+    },
     components: {
         QuestionBox
     },
