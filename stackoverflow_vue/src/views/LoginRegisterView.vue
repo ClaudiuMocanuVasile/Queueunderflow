@@ -105,12 +105,12 @@
                                                 placeholder="Email" /><label class="form-label" for="register_email">Email</label> 
                                         </div>
 
-                                        <!-- Birthday input -->
+                                        <!-- Birthday input
                                         <div class="form-floating mb-4">
                                             
                                             <input type="date" id="register_birthday" v-model="birthday" class="form-control shadow-sm"
                                                 min="1900-01-01" max="2023-12-31" /><label class="form-label" for="register_birthday">Birthday</label> 
-                                        </div>
+                                        </div> -->
 
                                         <!-- Password input -->
                                         <div class="form-floating mb-4">
@@ -162,10 +162,8 @@ export default {
     data() {
         return {
             username: '',
-            displayed_name: '',
             password: '',
             confirm_password: '',
-            birthday: '',
             email: '',
             errors: [],
             errors_login: [],
@@ -211,7 +209,7 @@ export default {
                     this.$router.push(toPath)
                 })
                 .catch(error => {
-                    console.log(error)
+                    
                     if(error.response) {
                         for(const property in error.response.data) {
                             this.errors.push(`${property}; ${error.response.data[property]}`)

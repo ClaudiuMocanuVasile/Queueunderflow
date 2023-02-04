@@ -26,7 +26,7 @@ class QueueUser(models.Model):
     description = models.CharField(max_length = 255)
     score = models.IntegerField()
     date_registered = models.DateTimeField(auto_now_add = True)
-    subscription = models.BooleanField()
+    #subscription = models.BooleanField()
     profile_picture = models.ImageField(upload_to = 'uploads/', blank = True, null = True)
     thumbnail = models.ImageField(upload_to = 'uploads/', blank = True, null = True)
 

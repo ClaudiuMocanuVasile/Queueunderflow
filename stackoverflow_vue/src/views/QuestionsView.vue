@@ -33,7 +33,7 @@ export default {
             this.$store.commit('setIsLoading', true)
 
             await axios
-                .get(`/api/v1/questions/${categorySlug}/`)
+                .get(`/api/v1/questions/${category_slug}/`)
                 .then(response => {
                     this.category = response.data
 
