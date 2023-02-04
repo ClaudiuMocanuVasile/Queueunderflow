@@ -73,26 +73,26 @@ class QueueUser(models.Model):
 
         return thumbnail
 
-class Community(models.Model):
-    # Attributes
+# class Community(models.Model):
+#     # Attributes
 
-    name = models.CharField(max_length = 55)
-    date_created = models.DateTimeField(auto_now_add = True)
-    public = models.BooleanField()
-    premium = models.BooleanField()
+#     name = models.CharField(max_length = 55)
+#     date_created = models.DateTimeField(auto_now_add = True)
+#     public = models.BooleanField()
+#     premium = models.BooleanField()
 
-    # Utility
+#     # Utility
 
-    slug = models.SlugField()
+#     slug = models.SlugField()
 
-    class Meta:
-        ordering = ('name', )
+#     class Meta:
+#         ordering = ('name', )
 
-    def __str__(self):
-        return self.name
+#     def __str__(self):
+#         return self.name
 
-    def get_absolute_url(self):
-        return f'/{self.slug}/'
+#     def get_absolute_url(self):
+#         return f'/{self.slug}/'
 
 class Category(models.Model):
     # Attributes
@@ -117,7 +117,7 @@ class Question(models.Model):
 
     category = models.ForeignKey(Category, related_name = 'questions', on_delete = models.SET_NULL, null = True, blank = True)
     queue_user = models.ForeignKey(QueueUser, related_name = 'queue_user_questions', on_delete = models.SET_NULL, null = True, blank = True)
-    community = models.ForeignKey(Community, related_name = 'community', on_delete = models.CASCADE, null = True, blank = True)
+    # community = models.ForeignKey(Community, related_name = 'community', on_delete = models.CASCADE, null = True, blank = True)
 
     # Attributes
 
@@ -138,8 +138,6 @@ class Question(models.Model):
         return self.question
 
     def get_absolute_url(self):
-        if self.community:
-            return f'/{self.community.slug}/{self.category.slug}/{self.slug}/'
         return f'/{self.category.slug}/{self.slug}/'
 
 class Answer(models.Model):

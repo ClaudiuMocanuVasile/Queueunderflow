@@ -44,22 +44,26 @@
                                 <div class="tab-pane fade show active" id="pills-login" role="tabpanel"
                                     aria-labelledby="pills-login">
 
-                                    <form class="login-register-form">
+                                    <form @submit.prevent="submitFormLogin" class="login-register-form">
                                         <hr>
                                         <h1 class="mx-auto">Sign in</h1>
                                         <hr class="mb-4">
                                         <!-- Email input -->
-                                        <div class="form-outline mb-3">
-                                            <!-- <label class="form-label" for="login_email" >Email</label> -->
-                                            <input type="email" id="login_email" class="form-control shadow-sm"
-                                                placeholder="Email" />
+                                        <div class="form-floating form-outline mb-3">
+                                           
+                                            <input type="email" id="login_email" v-model="username_login" class="form-control shadow-sm"
+                                                placeholder="Email" /><label class="form-label" for="login_email" >Email</label>
                                         </div>
 
                                         <!-- Password input -->
-                                        <div class="form-outline mb-4">
-                                            <!-- <label class="form-label" for="login_password">Password</label> -->
-                                            <input type="password" id="login_password" class="form-control shadow-sm"
-                                                placeholder="Password" />
+                                        <div class="form-floating mb-4">
+                                           
+                                            <input type="password" id="login_password" v-model="password_login" class="form-control shadow-sm"
+                                                placeholder="Password" /> <label class="form-label" for="login_password">Password</label>
+                                        </div>
+
+                                        <div v-if="errors_login.length">
+                                            <p v-for="error in errors" v-bind:key="error">{{ error }}</p>
                                         </div>
 
                                         <!-- Submit button -->
@@ -76,43 +80,54 @@
                                 <div class="tab-pane fade show" id="pills-register" role="tabpanel"
                                     aria-labelledby="pills-register">
 
-                                    <form class="login-register-form">
+                                    <form @submit.prevent="submitFormRegister" class="login-register-form">
                                         <hr>
                                         <h1 class="mx-auto">Register</h1>
                                         <hr class="hr mb-4">
                                         <!-- Username input -->
-                                        <div class="form-outline mb-4">
-                                            <!-- <label class="form-label" for="register_username">Username</label> -->
-                                            <input type="text" id="register_username" class="form-control shadow-sm"
-                                                placeholder="Username" />
+                                        <div class="form-floating mb-4">
+                                           
+                                            <input type="text" id="register_username" v-model="username" class="form-control shadow-sm"
+                                                placeholder="Username" /> <label class="form-label" for="register_username">Username</label>
                                         </div>
 
                                         <!-- Displayed name input -->
-                                        <div class="form-outline mb-4">
-                                            <!-- <label class="form-label" for="register_displayedName">Displayed Name</label> -->
-                                            <input type="text" id="register_displayedName"
-                                                class="form-control shadow-sm" placeholder="Displayed name" />
+                                        <div class="form-floating mb-4">
+                                            
+                                            <input type="text" id="register_displayedName" v-model="displayed_name"
+                                                class="form-control shadow-sm" placeholder="Displayed name" /><label class="form-label" for="register_displayedName">Displayed Name</label> 
                                         </div>
 
                                         <!-- Birthday input -->
-                                        <div class="form-outline mb-4">
-                                            <!-- <label class="form-label" for="register_birthday">Birthday</label> -->
-                                            <input type="date" id="register_birthday" class="form-control shadow-sm"
-                                                min="1900-01-01" max="2023-12-31" />
+                                        <div class="form-floating mb-4">
+                                            
+                                            <input type="date" id="register_birthday" v-model="birthday" class="form-control shadow-sm"
+                                                min="1900-01-01" max="2023-12-31" /><label class="form-label" for="register_birthday">Birthday</label> 
                                         </div>
 
                                         <!-- Email input -->
-                                        <div class="form-outline mb-4">
-                                            <!-- <label class="form-label" for="register_email">Email</label> -->
-                                            <input type="email" id="register_email" class="form-control shadow-sm"
-                                                placeholder="Email" />
+                                        <div class="form-floating mb-4">
+                                            
+                                            <input type="email" id="register_email" v-model="email" class="form-control shadow-sm"
+                                                placeholder="Email" /><label class="form-label" for="register_email">Email</label> 
                                         </div>
 
                                         <!-- Password input -->
-                                        <div class="form-outline mb-4">
-                                            <!-- <label class="form-label" for="register_password">Password</label> -->
-                                            <input type="password" id="register_password" class="form-control"
-                                                placeholder="Password" />
+                                        <div class="form-floating mb-4">
+                                             
+                                            <input type="password" id="register_password" v-model="password" class="form-control"
+                                                placeholder="Confirm password" /><label class="form-label" for="register_password">Confirm password</label>
+                                        </div>
+
+                                        <!-- Confirm password input -->
+                                        <div class="form-floating mb-4">
+                                            
+                                            <input type="password" id="confirm_password" v-model="confirm_password" class="form-control shadow-sm"
+                                                placeholder="Confirm assword" /><label class="form-label" for="login_password">Password</label>
+                                        </div>
+
+                                        <div v-if="errors.length">
+                                            <p v-for="error in errors" v-bind:key="error">{{ error }}</p>
                                         </div>
 
                                         <!-- Submit button -->
@@ -137,19 +152,94 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 
 export default {
     name: 'LoginRegisterView',
     components: {
     },
-    methods: {
-    switchTabToRegister() {
-      document.querySelector('#ex1-tab-2').click();
+    data() {
+        return {
+            username: '',
+            displayed_name: '',
+            password: '',
+            confirm_password: '',
+            birthday: '',
+            email: '',
+            errors: [],
+            errors_login: [],
+            username_login: '',
+            password_login: ''
+        }
     },
-    switchTabToLogin() {
-      document.querySelector('#ex1-tab-1').click();
+    mounted() {
+        document.title = 'Log In | Queueunderflow'
+    },
+    methods: {
+        // switchTabToRegister() {
+        // document.querySelector('#ex1-tab-2').click();
+        // },
+        // switchTabToLogin() {
+        // document.querySelector('#ex1-tab-1').click();
+        // }
+
+        async submitFormLogin() {
+
+        },
+
+        submitFormRegister()
+        {
+            this.errors = []
+            if(this.username === '') {
+                this.errors.push('The username is missing')
+            }
+
+            if(this.password === '') {
+                this.errors.push('The password is too short')
+            }
+
+            if(this.password !== this.confirm_password) {
+                this.errors.push('The passwords do not match')
+            }
+
+            if(!this.errors.length) {
+                const formData = {
+                    username: this.username,
+                    password: this.password,
+                    email: this.email
+                }
+
+                axios
+                    .post("/api/v1/users/", formData)
+                    .then(response => {
+                        toast({
+                            message: 'Account created, you can now log in.',
+                            type: 'is-success',
+                            dismissible: true,
+                            pauseOnHover: true,
+                            duration: 2000,
+                            position: 'bottom-right'
+                        })
+
+                        this.$router.push('/login')
+                    })
+                    .catch(error => {
+                        if(error.response) {
+                            for(const property in error.response.data) {
+                                this.errors.push(`${property}: ${error.response.data[property]}`)
+                            }
+
+                            console.log(JSON.stringify(error.response.data))
+                        } else if(PerformanceResourceTiming.message) {
+                            this.errors.push('Something went wrong. Please try again')
+
+                            console.log(JSON.stringify(error))
+                        }
+                    })
+            }
+        }
     }
-  }
 
 }
 </script>

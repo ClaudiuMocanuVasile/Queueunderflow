@@ -19,8 +19,7 @@
                         <span class="navbar-toggler-icon"></span>
                     </button>
 
-                    <div class="collapse navbar-collapse text-end" id="navbarSupportedContent"
-                        v-if="!isLoginPage">
+                    <div class="collapse navbar-collapse text-end" id="navbarSupportedContent" v-if="!isLoginPage">
                         <div class="navbar-nav">
                             <router-link to="" class="nav-link nav-link-white-gray mx-3 mx-xl-0 p-0" href="#">
                                 <div class="mx-2 d-flex justify-content-end d-xl-none mt-xl-0 mt-2">
@@ -99,11 +98,12 @@
                             <div class="container-fluid px-0">
                                 <div class="d-flex flex-md-row flex-column justify-content-between">
                                     <div class="flex-grow-1">
-                                        <form class="d-flex" role="search">
+                                        <form method="get" action="/search" class="d-flex" role="search">
 
                                             <input class="form-control me-2" type="search"
                                                 placeholder="Search topic or question..." aria-label="Search">
-                                            <button class="btn btn-outline-light mx-2 border-secondary" type="submit">Search</button>
+                                            <button class="btn btn-outline-light mx-2 border-secondary"
+                                                type="submit">Search</button>
 
 
                                         </form>
@@ -134,6 +134,10 @@
             </nav>
         </div>
 
+        <div class="spinner-border" v-bind:class="{ 'is-loading': $store.state.isLoading }" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+
         <!-- Main content -->
         <div id="main">
             <router-view />
@@ -144,7 +148,8 @@
             <!-- Footer -->
             <footer class="text-center text-lg-start bg-dark text-white">
                 <!-- Section: Social media -->
-                <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom border-secondary">
+                <section
+                    class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom border-secondary">
                     <!-- Left -->
                     <div class="me-5 d-none d-lg-block">
                         <span>Get connected with us on social networks:</span>
@@ -281,15 +286,27 @@ export default {
             isLoginPage: false
         }
     },
+    beforeCreate() {
+        this.$store.commit('initializeStore')
+
+        const token = this.$store.state.token
+
+        if(token) {
+            axios.defaults.headers.common['Authorization'] = "Token " + token
+        } else {
+            axios.defaults.headers.common['Authorization'] = ""
+        }
+    },
     computed: {
-    isLoginPage() {
-      return this.$route.path === '/login'
+        isLoginPage() {
+            return this.$route.path === '/login'
+        }
     }
-  }
 }
 </script>
 
 <style lang="scss">
+
 .nav-link-white-gray {
     color: white !important;
 }
