@@ -10,35 +10,41 @@ from .serializers import QuestionSerializer, CategorySerializer
 
 # Create your views here.
 
-class LatestQuestionsList(APIView):
-    def get(self, request, fromat = None):
+class QuestionsList(APIView):
+    def get(self, request, format = None):
         questions = Question.objects.all()
         serializer = QuestionSerializer(questions, many = True)
         return Response(serializer.data)
 
-class QuestionDetail(APIView):
-    def get_object(self, community_slug, category_slug, question_slug):
-        try:
-            return Question.objects.filter(community__slug = community_slug, category__slug = category_slug).get(slug = question_slug)
-        except Question.DoesNotExist:
-            raise Http404
-
-    def geT(self, request, community_slug, category_slug, product_slug, format = None):
-        question = self.get_object(community_slug, category_slug, product_slug)
-        serializer = LatestQuestionsList(question)
+class CategoriesList(APIView):
+    def get(self, request, format = None):
+        categories = Category.objects.all()
+        serializer = CategorySerializer(categories, many = True)
         return Response(serializer.data)
 
 class CategoryDetail(APIView):
-    def get_object(self, community_slug, category_slug):
+    def get_object(self, category_slug):
         try:
-            return Category.objects.filter(community__slug = community_slug).get(slug = category_slug)
+            return Category.objects.get(slug = category_slug)
         except Category.DoesNotExist:
             raise Http404
-        
-        def get(self, request, community_slug, category_slug, format = None):
-            category = self.get_object(community_slug, category_slug)
-            serializer = CategorySerializer(category)
-            return Response(serializer.data)
+
+    def get(self, request, category_slug, format = None):
+        category = self.get_object(category_slug)
+        serializer = CategorySerializer(category)
+        return Response(serializer.data)
+
+class QuestionDetail(APIView):
+    def get_object(self, category_slug, question_slug):
+        try:
+            return Question.objects.filter(category__slug = category_slug).get(slug = question_slug)
+        except Question.DoesNotExist:
+            raise Http404
+
+    def get(self, request, category_slug, question_slug, format = None):
+        question = self.get_object(category_slug, question_slug)
+        serializer = QuestionSerializer(question)
+        return Response(serializer.data)
 
 @api_view(['POST'])
 def search(request):

@@ -18,12 +18,14 @@ class CategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Category
-        fields = {
+        fields = (
             "id",
             "name",
             #"community",
+            "slug",
             "get_absolute_url",
-        }
+            "questions"
+        )
 
 # class CommunitySerializer(serializers.ModelSerializer):
 #     categories = CategorySerializer(many = True)
