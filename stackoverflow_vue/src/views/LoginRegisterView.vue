@@ -50,16 +50,18 @@
                                         <hr class="mb-4">
                                         <!-- Username input -->
                                         <div class="form-floating form-outline mb-3">
-                                           
-                                            <input type="username" id="login_username" v-model="username_login" class="form-control shadow-sm"
-                                                placeholder="Username" /><label class="form-label" for="login_username" >Username</label>
+
+                                            <input type="username" id="login_username" v-model="username_login"
+                                                class="form-control shadow-sm" placeholder="Username" /><label
+                                                class="form-label" for="login_username">Username</label>
                                         </div>
 
                                         <!-- Password input -->
                                         <div class="form-floating mb-4">
-                                           
-                                            <input type="password" id="login_password" v-model="password_login" class="form-control shadow-sm"
-                                                placeholder="Password" /> <label class="form-label" for="login_password">Password</label>
+
+                                            <input type="password" id="login_password" v-model="password_login"
+                                                class="form-control shadow-sm" placeholder="Password" /> <label
+                                                class="form-label" for="login_password">Password</label>
                                         </div>
 
                                         <div v-if="errors_login.length">
@@ -71,7 +73,8 @@
 
                                         <!-- Register buttons -->
                                         <div class="text-center">
-                                            <p>Not a member? <a href="#" @click="switchTabToRegister">Register here!</a></p>
+                                            <p>Not a member? <a href="#" @click="switchTabToRegister">Register here!</a>
+                                            </p>
                                         </div>
                                     </form>
                                 </div>
@@ -86,23 +89,26 @@
                                         <hr class="hr mb-4">
                                         <!-- Username input -->
                                         <div class="form-floating mb-4">
-                                           
-                                            <input type="text" id="register_username" v-model="username" class="form-control shadow-sm"
-                                                placeholder="Username" /> <label class="form-label" for="register_username">Username</label>
+
+                                            <input type="text" id="register_username" v-model="username"
+                                                class="form-control shadow-sm" placeholder="Username" /> <label
+                                                class="form-label" for="register_username">Username</label>
                                         </div>
 
                                         <!-- Displayed name input -->
                                         <div class="form-floating mb-4">
-                                            
+
                                             <input type="text" id="register_displayedName" v-model="displayed_name"
-                                                class="form-control shadow-sm" placeholder="Displayed name" /><label class="form-label" for="register_displayedName">Displayed Name</label> 
+                                                class="form-control shadow-sm" placeholder="Displayed name" /><label
+                                                class="form-label" for="register_displayedName">Displayed Name</label>
                                         </div>
 
                                         <!-- Email input -->
                                         <div class="form-floating mb-4">
-                                            
-                                            <input type="email" id="register_email" v-model="email" class="form-control shadow-sm"
-                                                placeholder="Email" /><label class="form-label" for="register_email">Email</label> 
+
+                                            <input type="email" id="register_email" v-model="email"
+                                                class="form-control shadow-sm" placeholder="Email" /><label
+                                                class="form-label" for="register_email">Email</label>
                                         </div>
 
                                         <!-- Birthday input
@@ -114,16 +120,18 @@
 
                                         <!-- Password input -->
                                         <div class="form-floating mb-4">
-                                             
-                                            <input type="password" id="register_password" v-model="password" class="form-control"
-                                                placeholder="Confirm password" /><label class="form-label" for="register_password">Confirm password</label>
+
+                                            <input type="password" id="register_password" v-model="password"
+                                                class="form-control" placeholder="Confirm password" /><label
+                                                class="form-label" for="register_password">Confirm password</label>
                                         </div>
 
                                         <!-- Confirm password input -->
                                         <div class="form-floating mb-4">
-                                            
-                                            <input type="password" id="confirm_password" v-model="confirm_password" class="form-control shadow-sm"
-                                                placeholder="Confirm assword" /><label class="form-label" for="login_password">Password</label>
+
+                                            <input type="password" id="confirm_password" v-model="confirm_password"
+                                                class="form-control shadow-sm" placeholder="Confirm assword" /><label
+                                                class="form-label" for="login_password">Password</label>
                                         </div>
 
                                         <div v-if="errors.length">
@@ -135,7 +143,8 @@
 
                                         <!-- Register buttons -->
                                         <div class="text-center">
-                                            <p>Already a member? <a href="#" @click="switchTabToLogin">Sign in here!</a></p>
+                                            <p>Already a member? <a href="#" @click="switchTabToLogin">Sign in here!</a>
+                                            </p>
                                         </div>
                                     </form>
                                 </div>
@@ -175,12 +184,12 @@ export default {
         document.title = 'Log In | Queueunderflow'
     },
     methods: {
-        // switchTabToRegister() {
-        // document.querySelector('#ex1-tab-2').click();
-        // },
-        // switchTabToLogin() {
-        // document.querySelector('#ex1-tab-1').click();
-        // }
+        switchTabToRegister() {
+            document.querySelector('#ex1-tab-2').click();
+        },
+        switchTabToLogin() {
+            document.querySelector('#ex1-tab-1').click();
+        },
 
         submitFormLogin() {
             axios.defaults.headers.common["Authorization"] = ""
@@ -191,13 +200,13 @@ export default {
                 username: this.username_login,
                 password: this.password_login
             }
-            
+
             axios
                 .post("/api/v1/token/login/", formData)
                 .then(response => {
                     console.log(response)
                     const token = response.data.auth_token
-                    
+
                     this.$store.commit('setToken', token)
 
                     axios.defaults.headers.common["Authorization"] = "Token " + token
@@ -209,12 +218,12 @@ export default {
                     this.$router.push(toPath)
                 })
                 .catch(error => {
-                    
-                    if(error.response) {
-                        for(const property in error.response.data) {
+
+                    if (error.response) {
+                        for (const property in error.response.data) {
                             this.errors.push(`${property}; ${error.response.data[property]}`)
                         }
-                        
+
                     } else {
                         this.errors.push('Something went wrong. Please try again')
 
@@ -223,22 +232,21 @@ export default {
                 })
         },
 
-        submitFormRegister()
-        {
+        submitFormRegister() {
             this.errors = []
-            if(this.username === '') {
+            if (this.username === '') {
                 this.errors.push('The username is missing')
             }
 
-            if(this.password === '') {
+            if (this.password === '') {
                 this.errors.push('The password is too short')
             }
 
-            if(this.password !== this.confirm_password) {
+            if (this.password !== this.confirm_password) {
                 this.errors.push('The passwords do not match')
             }
 
-            if(!this.errors.length) {
+            if (!this.errors.length) {
                 const formData = {
                     username: this.username,
                     password: this.password,
@@ -253,13 +261,13 @@ export default {
                         this.$router.push('/login')
                     })
                     .catch(error => {
-                        if(error.response) {
-                            for(const property in error.response.data) {
+                        if (error.response) {
+                            for (const property in error.response.data) {
                                 this.errors.push(`${property}: ${error.response.data[property]}`)
                             }
 
                             console.log(JSON.stringify(error.response.data))
-                        } else if(PerformanceResourceTiming.message) {
+                        } else if (PerformanceResourceTiming.message) {
                             this.errors.push('Something went wrong. Please try again')
 
                             console.log(JSON.stringify(error))

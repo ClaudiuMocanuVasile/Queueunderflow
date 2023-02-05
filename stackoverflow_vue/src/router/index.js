@@ -31,9 +31,9 @@ const routes = [
     path: '/:category_slug/',
     name: 'Questions',
     component: QuestionsView
-  },,
+  },
   {
-    path: '/categories/',
+    path: '/categories',
     name: 'Categories',
     component: CategoriesView
   },
@@ -43,7 +43,7 @@ const routes = [
     component: SearchView
   },
   {
-    path: '/profile/',
+    path: '/profile',
     name: 'Profile',
     component: ProfileView,
     meta: {
