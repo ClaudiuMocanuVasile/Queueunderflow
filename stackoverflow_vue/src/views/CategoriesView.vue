@@ -19,7 +19,7 @@
 
                 <!-- Categories Content -->
                 <div class="px-5 py-5">
-                    <div class="categories-container column d-flex">
+                    <div class="categories-container row d-flex">
 
                          <!-- Category Exemple 1 -->
                          <div class="card m-1 bg-light w-auto">
@@ -47,7 +47,38 @@
                             <div class="card-body">
                                 <h3><a href="#" class="text-decoration-none text-dark">Travel</a></h3>
                             </div>
+                        </div>    
+                        <!-- Category Exemple 4 -->
+                        <div class="card m-1 bg-light w-auto">
+                            <div class="card-body">
+                                <h3><a href="#" class="text-decoration-none text-dark">Category 5</a></h3>
+                            </div>
                         </div>
+
+                        <!-- Category Exemple 4 -->
+                        <div class="card m-1 bg-light w-auto">
+                            <div class="card-body">
+                                <h3><a href="#" class="text-decoration-none text-dark">Category 6</a></h3>
+                            </div>
+                        </div>
+                        <!-- Category Exemple 4 -->
+                        <div class="card m-1 bg-light w-auto">
+                            <div class="card-body">
+                                <h3><a href="#" class="text-decoration-none text-dark">Category 7</a></h3>
+                            </div>
+                        </div>
+                        <!-- Category Exemple 4 -->
+                        <div class="card m-1 bg-light w-auto">
+                            <div class="card-body">
+                                <h3><a href="#" class="text-decoration-none text-dark">Category 8</a></h3>
+                            </div>
+                        </div>
+                        <!-- Category Exemple 4 -->
+                        <div class="card m-1 bg-light w-auto">
+                            <div class="card-body">
+                                <h3><a href="#" class="text-decoration-none text-dark">Category 9</a></h3>
+                            </div>
+                        </div>                    
 
                     </div>
                 </div>
