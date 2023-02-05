@@ -67,7 +67,7 @@
                                     <div class="flex-grow-1">
                                         <form method="get" action="/search" class="d-flex" role="search">
 
-                                            <input class="form-control me-2" type="search"
+                                            <input class="form-control me-2" type="search" name="query"
                                                 placeholder="Search topic or question..." aria-label="Search">
                                             <button class="btn btn-outline-light mx-2 border-secondary"
                                                 type="submit">Search</button>
@@ -261,7 +261,9 @@ import axios from 'axios'
 export default {
     data() {
         return {
-            isLoginPage: false
+            isLoginPage: false,
+            questions: [],
+            query: ''
         }
     },
     beforeCreate() {
@@ -278,6 +280,9 @@ export default {
     computed: {
         
     },
+    mounted() {
+        
+    },
     methods: {
         logout() {
             axios.defaults.headers.common["Authorization"] = ""
@@ -289,7 +294,8 @@ export default {
             this.$store.commit('removeToken')
 
             this.$router.push('/')
-        }
+        },
+        
     }
 }
 </script>

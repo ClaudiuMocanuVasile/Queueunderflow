@@ -65,7 +65,7 @@
                                         </div>
 
                                         <div v-if="errors_login.length">
-                                            <p v-for="error in errors" v-bind:key="error">{{ error }}</p>
+                                            <p v-for="error in errors_login" v-bind:key="error">{{ error }}</p>
                                         </div>
 
                                         <!-- Submit button -->
@@ -95,13 +95,13 @@
                                                 class="form-label" for="register_username">Username</label>
                                         </div>
 
-                                        <!-- Displayed name input -->
+                                        <!-- Displayed name input
                                         <div class="form-floating mb-4">
 
                                             <input type="text" id="register_displayedName" v-model="displayed_name"
                                                 class="form-control shadow-sm" placeholder="Displayed name" /><label
                                                 class="form-label" for="register_displayedName">Displayed Name</label>
-                                        </div>
+                                        </div> -->
 
                                         <!-- Email input -->
                                         <div class="form-floating mb-4">
@@ -192,6 +192,7 @@ export default {
         },
 
         submitFormLogin() {
+            this.errors_login = []
             axios.defaults.headers.common["Authorization"] = ""
 
             localStorage.removeItem("token")
@@ -221,11 +222,11 @@ export default {
 
                     if (error.response) {
                         for (const property in error.response.data) {
-                            this.errors.push(`${property}; ${error.response.data[property]}`)
+                            this.errors_login.push(`${property}; ${error.response.data[property]}`)
                         }
 
                     } else {
-                        this.errors.push('Something went wrong. Please try again')
+                        this.errors_login.push('Something went wrong. Please try again')
 
                         console.log(JSON.stringify(error))
                     }

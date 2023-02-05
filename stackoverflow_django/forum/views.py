@@ -51,7 +51,7 @@ def search(request):
     query = request.data.get('query', '')
 
     if query:
-        questions = Question.objects.filter(Q(name__icontains = query) | Q(description__icontains = query))
+        questions = Question.objects.filter(Q(question__icontains = query) | Q(description__icontains = query))
         serializer = QuestionSerializer(questions, many = True)
         return Response(serializer.data)
     else:

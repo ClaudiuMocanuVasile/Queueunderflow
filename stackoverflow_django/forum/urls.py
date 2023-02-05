@@ -6,7 +6,8 @@ urlpatterns = [
     path('questions/', views.QuestionsList.as_view()),
     path('categories/', views.CategoriesList.as_view()),
     path('questions/<slug:category_slug>/', views.CategoryDetail.as_view()),
-    path('questions/search/', views.search),
+    path('search/', views.search),
     path('questions/<slug:category_slug>/<slug:question_slug>/', views.QuestionDetail.as_view()),
+    #path('users/<slug:user_slug>/', views.UserDetail.as_view()),
     #path('categories/', views.CategoryDetail.as_view())
 ]

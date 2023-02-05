@@ -1,13 +1,14 @@
 <template>
     <div class="search">
         <QuestionBox
-            v-for = "question in category.questions"
+            v-for = "question in questions"
             v-bind:key="question.id"
             v-bind:question="question"/>
         </div>
 </template>
 
 <script>
+import axios from 'axios'
 import QuestionBox from '@/components/QuestionBox.vue'
 
 export default {
@@ -17,14 +18,17 @@ export default {
     },
     data() {
         return {
-            products: [],
+            questions: [],
             query: ''
         }
     },
     mounted() {
         document.title = 'Search | Queueunderflow'
 
-        let uri = window.Geolocation.search.substring(1)
+        if(window.location.search)
+        {
+            var uri = window.location.search.substring(1)
+        }
         let params = new URLSearchParams(uri)
         if(params.get('query')) {
             this.query = params.get('query')
@@ -35,15 +39,16 @@ export default {
     methods: {
         async performSearch() {
             this.$store.commit('setIsLoading', true)
-
+            
             await axios
-                .post('/api/v1/questions/search', {'query': this.query})
+                .post('/api/v1/search/', {'query': this.query})
                 .then(response => {
-                    this.products = response.data
+                    this.questions = response.data
                 })
                 .catch(error => {
                     console.log(error)
                 })
+            this.$store.commit('setIsLoading', false)
         }
     }
 }
