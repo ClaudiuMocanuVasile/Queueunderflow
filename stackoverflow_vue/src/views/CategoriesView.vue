@@ -19,67 +19,15 @@
 
                 <!-- Categories Content -->
                 <div class="px-5 py-5">
-                    <div class="categories-container row d-flex">
-
-                         <!-- Category Exemple 1 -->
-                         <div class="card m-1 bg-light w-auto">
-                            <div class="card-body">
-                                <h3><a href="#" class="text-decoration-none text-dark">Music</a></h3>
+                    <div class="categories-container d-flex flex-wrap">
+                        <div v-for="category in categories" :key="category.id">
+                            <!-- Category -->
+                            <div class="card m-1 bg-light w-auto">
+                                <div class="card-body">
+                                    <h3><a :href="`/questions/${category.slug}`" class="text-decoration-none text-dark">{{ category.name }}</a></h3>
+                                </div>
                             </div>
                         </div>
-
-                       <!-- Category Exemple 2 -->
-                       <div class="card m-1 bg-light w-auto">
-                            <div class="card-body">
-                                <h3><a href="#" class="text-decoration-none text-dark">IT</a></h3>
-                            </div>
-                        </div>
-
-                        <!-- Category Exemple 3 -->
-                        <div class="card m-1 bg-light w-auto">
-                            <div class="card-body">
-                                <h3><a href="#" class="text-decoration-none text-dark">Movies</a></h3>
-                            </div>
-                        </div>
-
-                        <!-- Category Exemple 4 -->
-                        <div class="card m-1 bg-light w-auto">
-                            <div class="card-body">
-                                <h3><a href="#" class="text-decoration-none text-dark">Travel</a></h3>
-                            </div>
-                        </div>    
-                        <!-- Category Exemple 4 -->
-                        <div class="card m-1 bg-light w-auto">
-                            <div class="card-body">
-                                <h3><a href="#" class="text-decoration-none text-dark">Category 5</a></h3>
-                            </div>
-                        </div>
-
-                        <!-- Category Exemple 4 -->
-                        <div class="card m-1 bg-light w-auto">
-                            <div class="card-body">
-                                <h3><a href="#" class="text-decoration-none text-dark">Category 6</a></h3>
-                            </div>
-                        </div>
-                        <!-- Category Exemple 4 -->
-                        <div class="card m-1 bg-light w-auto">
-                            <div class="card-body">
-                                <h3><a href="#" class="text-decoration-none text-dark">Category 7</a></h3>
-                            </div>
-                        </div>
-                        <!-- Category Exemple 4 -->
-                        <div class="card m-1 bg-light w-auto">
-                            <div class="card-body">
-                                <h3><a href="#" class="text-decoration-none text-dark">Category 8</a></h3>
-                            </div>
-                        </div>
-                        <!-- Category Exemple 4 -->
-                        <div class="card m-1 bg-light w-auto">
-                            <div class="card-body">
-                                <h3><a href="#" class="text-decoration-none text-dark">Category 9</a></h3>
-                            </div>
-                        </div>                    
-
                     </div>
                 </div>
 
@@ -98,17 +46,16 @@ export default {
     name: 'CategoriesView',
     data() {
         return {
-            category: {
-                questions: {}
-            }
-        }
-    },
-    components: {
+            categories: [],
+        };
     },
     mounted() {
-        this.getCategories()
-
-        document.title = 'Categories | Queueunderflow'
+        axios
+            .get('http://localhost:8000/api/v1/categories/')
+            .then(response => {
+                this.categories = response.data;
+            })
+            .catch(error => console.error(error));
     },
     methods: {
 
