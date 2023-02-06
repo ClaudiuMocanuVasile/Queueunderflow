@@ -6,25 +6,60 @@ from django.contrib.auth.models import User
 
 from io import BytesIO
 from PIL import Image
+from django.contrib.auth.models import AbstractBaseUser,PermissionsMixin,BaseUserManager
 
 # Create your models here.
 
 # User derived from Django User table
 
-class QueueUser(models.Model):
+class CustomUserManager(BaseUserManager):
+    def _create_user(self, username, email, password, **extra_fields):
+        if not username:
+            raise ValueError('Username must be provided')
+        if not email:
+            raise ValueError("Email must be provided")
+        if not password:
+            raise ValueError('Password is not provided')
+
+        user = self.model(
+            username = username,
+            email = self.normalize_email(email),
+            password = password,
+            **extra_fields
+        )
+
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_user(self, username, email, password, **extra_fields):
+        extra_fields.setdefault('is_staff',True)
+        extra_fields.setdefault('is_active',True)
+        extra_fields.setdefault('is_superuser',False)
+        return self._create_user(username = username, email = email, password = password, **extra_fields)
+
+    def create_superuser(self, username, email, password, **extra_fields):
+        extra_fields.setdefault('is_staff',True)
+        extra_fields.setdefault('is_active',True)
+        extra_fields.setdefault('is_superuser',True)
+        return self._create_user(username = username, email = email, password = password, **extra_fields)
+
+class QueueUser(AbstractBaseUser,PermissionsMixin):
     # Foreign keys
 
-    queue_user = models.OneToOneField(User, on_delete = models.CASCADE)
+    #queue_user = models.OneToOneField(User, on_delete = models.CASCADE)
 
     # Attributes
     
-    first_name = models.CharField(max_length = 25)
+    username = models.CharField(unique = True, max_length = 25)
+    password = models.CharField(max_length=128, verbose_name='password')
+    first_name = models.CharField(max_length = 25)  
     last_name = models.CharField(max_length = 25)
     email = models.EmailField()
-    displayed_name = models.CharField(max_length = 12)
-    birthday = models.DateField()
-    description = models.CharField(max_length = 255)
-    score = models.IntegerField()
+    #displayed_name = models.CharField(max_length = 12, null = True)
+    birthday = models.DateField(null = True)
+    description = models.CharField(max_length = 255, null = True)
+    score = models.IntegerField(default = 0)
     date_registered = models.DateTimeField(auto_now_add = True)
     #subscription = models.BooleanField()
     profile_picture = models.ImageField(upload_to = 'uploads/', blank = True, null = True)
@@ -34,11 +69,22 @@ class QueueUser(models.Model):
     
     slug = models.SlugField()
 
+    is_staff = models.BooleanField(default=True) # must needed, otherwise you won't be able to loginto django-admin.
+    is_active = models.BooleanField(default=True) # must needed, otherwise you won't be able to loginto django-admin.
+    is_superuser = models.BooleanField(default=False) # this field we inherit from PermissionsMixin.
+
+    objects = CustomUserManager()
+
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['email']
+
     class Meta:
-        ordering = ('displayed_name', )
+        verbose_name = 'User'
+        verbose_name_plural = 'Users'
+        ordering = ('id', )
 
     def __str__(self):
-        return self.first_name + self.last_name
+        return self.username
 
     def get_absolute_url(self):
         return f'/{self.slug}/'
@@ -122,14 +168,14 @@ class Question(models.Model):
     # Attributes
 
     question = models.CharField(max_length = 255)
-    description = models.CharField(max_length = 65535)
-    upvotes = models.IntegerField()
-    downvotes = models.IntegerField()
+    description = models.CharField(max_length = 65535, null = True, blank = True)
+    upvotes = models.IntegerField(default = 0)
+    downvotes = models.IntegerField(default = 0)
     date_posted = models.DateTimeField(auto_now_add = True)
 
     # Utility
 
-    slug = models.SlugField()
+    slug = models.SlugField(blank = True)
 
     class Meta:
         ordering = ('-date_posted', )
@@ -149,10 +195,10 @@ class Answer(models.Model):
     # Attributes
 
     answer = models.CharField(max_length = 65535)
-    upvotes = models.IntegerField()
-    downvotes = models.IntegerField()
+    upvotes = models.IntegerField(default = 0)
+    downvotes = models.IntegerField(default = 0)
     date_posted = models.DateTimeField(auto_now_add = True)
-    is_correct = models.BooleanField()
+    is_correct = models.BooleanField(default = False)
 
     # Utility
 
@@ -160,7 +206,7 @@ class Answer(models.Model):
         ordering = ('-question', '-date_posted', )
 
     def __str__(self):
-        return self.id
+        return self.answer
 
 
 class Comment(models.Model):

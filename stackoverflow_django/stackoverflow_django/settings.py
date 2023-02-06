@@ -96,6 +96,7 @@ DATABASES = {
     }
 }
 
+AUTH_USER_MODEL = "forum.QueueUser" 
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators

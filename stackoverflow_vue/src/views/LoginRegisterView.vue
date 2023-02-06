@@ -205,7 +205,7 @@ export default {
             axios
                 .post("/api/v1/token/login/", formData)
                 .then(response => {
-                    console.log(response)
+                    console.log(response.data)
                     const token = response.data.auth_token
 
                     this.$store.commit('setToken', token)
@@ -253,7 +253,7 @@ export default {
                     password: this.password,
                     email: this.email
                 }
-
+                console.log(formData)
                 axios
                     .post("/api/v1/users/", formData)
                     .then(response => {
@@ -267,11 +267,11 @@ export default {
                                 this.errors.push(`${property}: ${error.response.data[property]}`)
                             }
 
-                            console.log(JSON.stringify(error.response.data))
+                            //console.log(JSON.stringify(error.response.data))
                         } else if (PerformanceResourceTiming.message) {
                             this.errors.push('Something went wrong. Please try again')
 
-                            console.log(JSON.stringify(error))
+                            //console.log(JSON.stringify(error))
                         }
                     })
             }
