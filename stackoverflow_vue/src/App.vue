@@ -35,7 +35,8 @@
                         </div>
                         <div class="navbar-nav d-xl-none" v-else>
                             <router-link to="/login" class="nav-link nav-link-white-gray mx-1 mx-xl-0 p-0" href="#">
-                                <button class="btn btn-outline-light mx-2 border-secondary" type="submit">Log in</button>
+                                <button class="btn btn-outline-light mx-2 border-secondary" type="submit">Log
+                                    in</button>
                             </router-link>
 
                         </div>
@@ -52,13 +53,14 @@
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
-                                    <li class="text-end mx-2 mx-xl-0"><router-link to="/categories" class="dropdown-item"
-                                            href="#">All categories</router-link>
+                                    <li class="text-end mx-2 mx-xl-0"><router-link to="/categories"
+                                            class="dropdown-item" href="#">All categories</router-link>
                                     </li>
                                 </ul>
                             </li>
                             <li class="nav-item ms-3">
-                                <router-link to="" class="nav-link nav-link-white-gray mx-3 mx-xl-0" href="#">Post your own question!</router-link>
+                                <router-link to="" class="nav-link nav-link-white-gray mx-3 mx-xl-0" href="#">Post your
+                                    own question!</router-link>
                             </li>
                         </ul>
                         <div class="d-flex flex-grow-1">
@@ -75,13 +77,13 @@
 
                                         </form>
                                     </div>
-                                    <div class="navbar-nav" v-if="$store.state.isAuthenticated"> 
+                                    <div class="navbar-nav" v-if="$store.state.isAuthenticated">
                                         <router-link to="/profile" class="nav-link nav-link-white-gray mx-3 mx-xl-0 p-0"
                                             href="#">
                                             <div class="mx-3 d-flex justify-content-center d-none d-xl-block">
 
                                                 <span class="me-2">
-                                                    Hello, Cermergatorul
+                                                    Hello, {{ username }}
                                                 </span>
                                                 <i class="bi bi-person" style="font-size: 1.5rem;"></i>
 
@@ -263,7 +265,8 @@ export default {
         return {
             isLoginPage: false,
             questions: [],
-            query: ''
+            query: '',
+            username: ''
         }
     },
     beforeCreate() {
@@ -278,10 +281,19 @@ export default {
         }
     },
     computed: {
-        
+
     },
     mounted() {
-        
+        const token = localStorage.getItem('token');
+        axios.get('http://localhost:8000/api/v1/users', {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+            .then(response => {
+                console.table(response.data)
+                this.username = response.data.username;
+            });
     },
     methods: {
         logout() {
@@ -295,7 +307,7 @@ export default {
 
             this.$router.push('/')
         },
-        
+
     }
 }
 </script>

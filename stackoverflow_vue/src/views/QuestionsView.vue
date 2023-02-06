@@ -1,50 +1,61 @@
 <template>
-    <div class="questions">
-        <QuestionBox
-            v-for = "question in category.questions"
-            v-bind:key="question.id"
-            v-bind:question="question"/>
-    </div>
+    <section class="h-100 gradient-custom-2">
+        <div class="container py-5 h-100">
+
+            <!-- Questions Container -->
+            <div class="card">
+
+                <div class="rounded-top text-white cover h-50">
+                    <div class="m-5 d-flex flex-column">
+                        <h1 class="mx-auto">Questions</h1>
+                    </div>
+                </div>
+
+                <!-- Questions description -->
+                <div class="p-3 text-black d-flex flex-column" style="background-color: #f8f9fa;">
+                    <div class="mx-auto">Here you can find all the questions for the category {{ categoryName }}</div>
+                </div>
+
+                <!-- Questions Content -->
+                <div class="px-5 py-5">
+                    <div class="categories-container d-flex flex-wrap">
+                        <div v-for="question in questions" :key="question.id">
+                            <!-- Question -->
+                            <div class="card m-1 bg-light w-auto">
+                                <div class="card-body">
+                                    <h4><a href="#" class="text-decoration-none text-dark">{{ question.question }}</a></h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- Questions Container end -->
+        </div>
+
+    </section>
 </template>
 
 <script>
-import QuestionBox from '@/components/QuestionBox.vue'
+import axios from 'axios'
 
 export default {
     name: 'QuestionsView',
-    components: {
-        QuestionBox
+    data() {
+        return {
+            categoryName: '',
+            questions: [],
+        };
     },
     mounted() {
-        this.getCategory()
-    },
-    watch: {
-        $route(to, from) {
-            if(to.name === 'Category') {
-                this.getCategory()
-            }
-        }
-    },
-    methods: {
-        async getCategory() {
-            //const community_slug = this.$route.params.community_slug
-            const category_slug = this.$route.params.category_slug
+        const categorySlug = this.$route.params.category_slug;
+        axios.get(`http://localhost:8000/api/v1/questions/${categorySlug}`)
+            .then(response => {
+                this.categoryName = response.data.slug;
+                this.questions = response.data.questions;
+            });
 
-            this.$store.commit('setIsLoading', true)
-
-            await axios
-                .get(`/api/v1/questions/${category_slug}/`)
-                .then(response => {
-                    this.category = response.data
-
-                    document.title = this.category.name + ' | Queueunderflow'
-                })
-                .catch(error => {
-                    console.log(error)
-                })
-            
-            this.$store.commit('setIsLoading', false)
-        }
     }
 }
 </script>

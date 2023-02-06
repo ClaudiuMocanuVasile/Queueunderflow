@@ -24,7 +24,7 @@
                             <!-- Category -->
                             <div class="card m-1 bg-light w-auto">
                                 <div class="card-body">
-                                    <h3><a href="#" class="text-decoration-none text-dark">{{ category.name }}</a></h3>
+                                    <h3><a :href="`/questions/${category.slug}`" class="text-decoration-none text-dark">{{ category.name }}</a></h3>
                                 </div>
                             </div>
                         </div>

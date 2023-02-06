@@ -257,7 +257,7 @@ export default {
                 axios
                     .post("/api/v1/users/", formData)
                     .then(response => {
-                        console.log('Account created, you can now log in.')
+                        alert('Account created, you can now log in.')
 
                         this.$router.push('/login')
                     })
