@@ -5,6 +5,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
+from rest_framework.authtoken.models import Token
 
 from .models import *
 from .serializers import*
@@ -120,3 +121,12 @@ def answer(request):
         serializer.save()
         return Response(serializer.data, status = status.HTTP_201_CREATED)
     return Response(serializer.data, status = status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+def profile(request):
+    token = request.data.get('token', '')
+    user = Token.objects.get(key = token).user
+
+    user = QueueUser.objects.get(id = user.id)
+    serializer = QueueUserSerializer(user)
+    return Response(serializer.data)

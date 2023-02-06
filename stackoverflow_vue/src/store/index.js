@@ -4,7 +4,7 @@ export default createStore({
   state: {
     isAuthenticated: false,
     token: '',
-    isLoading: false
+    isLoading: false,
   },
   getters: {
   },

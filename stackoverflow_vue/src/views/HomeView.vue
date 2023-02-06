@@ -24,6 +24,8 @@ export default {
     },
     mounted() {
         document.title = 'Home | Queueunderflow'
+        
+        console.log(localStorage.getItem(token))
     }
 }
 </script>

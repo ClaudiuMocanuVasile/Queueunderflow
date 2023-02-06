@@ -11,6 +11,7 @@ urlpatterns = [
     path('search/', views.search),
     path('ask/', views.ask),
     path('answer/', views.answer),
+    path('profile/', views.profile),
     path('queue_users/', views.QueueUsersList.as_view()),
     path('questions/<slug:category_slug>/<slug:question_slug>/', views.QuestionDetail.as_view()),
     #path('users/<slug:user_slug>/', views.UserDetail.as_view()),

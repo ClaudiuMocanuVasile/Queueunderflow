@@ -284,14 +284,15 @@ export default {
 
     },
     mounted() {
+        console.log(localStorage.getItem(response.data.auth_token))
         const token = localStorage.getItem('token');
-        axios.get('http://localhost:8000/api/v1/users', {
+        axios.get(`http://localhost:8000/api/v1/users/${user_id}`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
         })
             .then(response => {
-                console.table(response.data)
+                console.log(response.data)
                 this.username = response.data.username;
             });
     },
