@@ -49,7 +49,8 @@ class CategorySerializer(serializers.ModelSerializer):
         )
 
 class QueueUserSerializer(serializers.ModelSerializer):
-    questions = QuestionSerializer(many = True)
+    #questions = QuestionSerializer(many = True)
+    #answers = AnswerSerializer(many = True)
 
     class Meta:
         model = QueueUser
@@ -63,9 +64,10 @@ class QueueUserSerializer(serializers.ModelSerializer):
             "birthday",
             "email",
             "slug",
+             "date_registered",
             "get_absolute_url",
-            "questions",
-            "date_registered"
+            #"questions",
+            #"answers"
         )
 
 # class CommunitySerializer(serializers.ModelSerializer):

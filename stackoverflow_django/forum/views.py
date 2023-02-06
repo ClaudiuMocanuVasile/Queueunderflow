@@ -17,6 +17,12 @@ class QuestionsList(APIView):
         serializer = QuestionSerializer(questions, many = True)
         return Response(serializer.data)
 
+class QueueUsersList(APIView):
+    def get(self, request, format = None):
+        users = QueueUser.objects.all()
+        serializer = QueueUserSerializer(users, many = True)
+        return Response(serializer.data)
+
 class AnswersList(APIView):
     def get(self, request, format = None):
         answers = Answer.objects.all()
@@ -48,9 +54,9 @@ class QueueUserDetail(APIView):
         except QueueUser.DoesNotExist:
             raise Http404
 
-    def get(self, request, category_slug, format = None):
-        category = self.get_object(category_slug)
-        serializer = CategorySerializer(category)
+    def get(self, request, user_slug, format = None):
+        user = self.get_object(user_slug)
+        serializer = QueueUserSerializer(user)
         return Response(serializer.data)
 
 class QuestionDetail(APIView):

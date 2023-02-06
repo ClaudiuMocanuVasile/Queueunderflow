@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from io import BytesIO
 from PIL import Image
 from django.contrib.auth.models import AbstractBaseUser,PermissionsMixin,BaseUserManager
+from django.template.defaultfilters import slugify
 
 # Create your models here.
 
@@ -53,12 +54,12 @@ class QueueUser(AbstractBaseUser,PermissionsMixin):
     
     username = models.CharField(unique = True, max_length = 25)
     password = models.CharField(max_length=128, verbose_name='password')
-    first_name = models.CharField(max_length = 25)  
-    last_name = models.CharField(max_length = 25)
+    first_name = models.CharField(max_length = 25, blank = True)  
+    last_name = models.CharField(max_length = 25, blank = True)
     email = models.EmailField()
     #displayed_name = models.CharField(max_length = 12, null = True)
-    birthday = models.DateField(null = True)
-    description = models.CharField(max_length = 255, null = True)
+    birthday = models.DateField(null = True, blank = True)
+    description = models.CharField(max_length = 255, null = True, blank = True)
     score = models.IntegerField(default = 0)
     date_registered = models.DateTimeField(auto_now_add = True)
     #subscription = models.BooleanField()
@@ -82,6 +83,11 @@ class QueueUser(AbstractBaseUser,PermissionsMixin):
         verbose_name = 'User'
         verbose_name_plural = 'Users'
         ordering = ('id', )
+
+    def save(self, *args, **kwargs):
+        
+        self.slug = slugify(self.username)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.username
