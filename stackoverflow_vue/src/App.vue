@@ -40,13 +40,6 @@
                             </router-link>
 
                         </div>
-                        <div class="navbar-nav d-xl-none" v-if="$store.state.isAuthenticated">
-                            <div class="nav-link nav-link-white-gray mx-1 mx-xl-0 p-0" href="#">
-                                <button @click="logout()" class="btn btn-outline-light mx-2 border-danger" type="submit">Log
-                                out</button>
-                            </div>
-
-                        </div>
 
                         <ul class="navbar-nav">
                             <li class="nav-item dropdown ms-3">
@@ -97,13 +90,7 @@
                                         </router-link>
 
                                     </div>
-                                    <div class="navbar-nav d-xl-block" v-if="$store.state.isAuthenticated">
-                            <div  class="nav-link nav-link-white-gray mx-1 mx-xl-0 p-0" href="#">
-                                <button @click="logout()" class="btn btn-outline-light mx-2 border-danger" type="submit">Log
-                                out</button>
-                            </div>
 
-                        </div>
                                 </div>
                             </div>
                         </div>
@@ -288,7 +275,6 @@ export default {
 
     },
     mounted() {
-        console.log(localStorage.getItem(response.data.auth_token))
         const token = localStorage.getItem('token');
         axios.post("/api/v1/profile/", { "token": token })
             .then(response => {
@@ -301,7 +287,7 @@ export default {
     methods: {
         logout() {
             axios.defaults.headers.common["Authorization"] = ""
-            
+
             localStorage.removeItem("token")
             localStorage.removeItem("username")
             localStorage.removeItem("userid")

@@ -182,7 +182,6 @@ export default {
     },
     mounted() {
         document.title = 'Log In | Queueunderflow'
-
     },
     methods: {
         switchTabToRegister() {
@@ -203,7 +202,6 @@ export default {
                 password: this.password_login
             }
 
-            
             axios
                 .post("/api/v1/token/login/", formData)
                 .then(response => {
