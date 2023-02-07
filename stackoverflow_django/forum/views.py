@@ -130,3 +130,14 @@ def profile(request):
     user = QueueUser.objects.get(id = user.id)
     serializer = QueueUserSerializer(user)
     return Response(serializer.data)
+
+@api_view(['PUT'])
+def edit_profile(request):
+    user = QueueUser.objects.get(username = request.data['username'])
+    user.first_name = request.data['first_name']
+    user.last_name = request.data['last_name']
+    user.birthday = request.data['birthday']
+    user.description = request.data['description']
+    user.save()
+
+    return Response({"questions": {}})
