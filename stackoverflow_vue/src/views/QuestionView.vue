@@ -6,40 +6,67 @@
             <div class="card">
 
                 <!-- Question description -->
-                <div class="pt-3 pb-4 ps-5 text-black d-flex flex-column" style="background-color: #f8f9fa;">
+                <div class="pt-3 pb-4 ps-5 text-black d-flex flex-column">
                     <h4 class="mt-3">{{ question.question }}</h4>
 
                     <div class="mt-3 d-flex">
-                        <div><button class="btn btn-danger ms-2"
-                                style="max-width: fit-content;" @click="redirectToCategory">{{ categoryName }}</button></div>
-                        <div class="py-1 ms-4">Question posted by: {{ username }}</div>
-                        <div class="py-1 ms-4">Asked: {{ formattedDate }} {{ formattedTime }}</div>
+                        <div><button class="btn btn-danger ms-2" style="max-width: fit-content;"
+                                @click="redirectToCategory">{{ categoryName }}</button></div>
+                        <div class="py-1 ms-4">Question posted by: {{ question.queue_user }}</div>
+                        <div class="py-1 ms-4">Asked: {{ formattedDate }}</div>
+                        <div class="py-1 ms-4">{{ formattedTime }}</div>
                     </div>
 
-                    <hr>
+                    <!-- <hr> -->
 
                     <!-- Add comment -->
-                    <div class="pt-3 text-danger" @click="showTextarea = !showTextarea">
-                        <a style="cursor: pointer;">Add a comment</a>
+                    <div class="pt-5 pb-3 text-danger" @click="showTextareaAnswer = !showTextareaAnswer">
+                        <a style="cursor: pointer;">Answer this question</a>
                     </div>
 
                     <!-- Comment textarea -->
-                    <div v-if="showTextarea">
+                    <div v-if="showTextareaAnswer">
                         <textarea class="form-control w-75" rows="5"></textarea>
                         <button class="btn btn-dark mt-3">Submit</button>
                     </div>
                 </div>
 
-                <!-- Questions Content -->
-                <div class="px-5 py-5">
-                    <div class="categories-container d-flex flex-wrap">
+                <hr>
+                <h4 class="ps-5 py-4">Answers:</h4>
+
+                <!-- Answer Content -->
+                <div class="px-5 py-4">
+                    <div class="d-flex flex-wrap">
                         <div v-for="answer in answers" :key="answer.id">
-                            <!-- Question -->
-                            <div class="card m-1 bg-light w-auto">
+                            <!-- Answer -->
+                            <div class="p-4 m-1 w-auto">
                                 <div class="card-body">
+
+                                    <div class="my-3 d-flex bg-danger text-white p-2">
+                                        <div>Answered</div>
+                                        <div class="ms-4">{{ new Date(answer.date_posted).toLocaleDateString() }}</div>
+                                        <div class="ms-4">{{ new Date(answer.date_posted).toLocaleTimeString() }}</div>
+                                    </div>
+
                                     <div>{{ answer.answer }}</div>
+
+
+                                    <div>
+                                        <!-- Add comment -->
+                                        <div class="pt-2 pb-3 text-danger" @click="showTextareaComment = !showTextareaComment">
+                                            <a style="cursor: pointer;">Add comment</a>
+                                        </div>
+
+                                        <!-- Comment textarea -->
+                                        <div v-if="showTextareaComment">
+                                            <textarea class="form-control w-75" rows="5"></textarea>
+                                            <button class="btn btn-dark mt-3">Submit</button>
+                                        </div>
+                                        <hr>
+                                    </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -61,9 +88,11 @@ export default {
             categoryName: '',
             question: [],
             answers: [],
+            posted_by: '',
             username: '',
             date_posted: '',
-            showTextarea: false
+            showTextareaAnswer: false,
+            showTextareaComment: false
         }
 
     },
@@ -92,6 +121,9 @@ export default {
                     this.question = response.data
                     this.date_posted = this.question.date_posted
                     this.answers = this.question.answers
+                    this.posted_by = this.question.queue_user
+                    console.log(this.question)
+                    console.log(this.answers)
                 });
 
             this.$store.commit('setIsLoading', false)

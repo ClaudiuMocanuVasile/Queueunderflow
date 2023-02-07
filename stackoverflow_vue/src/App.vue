@@ -43,20 +43,11 @@
 
                         <ul class="navbar-nav">
                             <li class="nav-item dropdown ms-3">
-                                <router-link to="" class="nav-link nav-link-white-gray dropdown-toggle mx-3 mx-xl-0"
-                                    href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <router-link to="/categories/" class="nav-link nav-link-white-gray mx-3 mx-xl-0"
+                                    href="#" role="button">
                                     Categories
                                 </router-link>
-                                <ul class="dropdown-menu dropdown-menu-dark">
-                                    <li class="text-end mx-2 mx-xl-0"><router-link to="" class="dropdown-item"
-                                            href="#">Favorite categories</router-link></li>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                    <li class="text-end mx-2 mx-xl-0"><router-link to="/categories"
-                                            class="dropdown-item" href="#">All categories</router-link>
-                                    </li>
-                                </ul>
+                                
                             </li>
                             <li class="nav-item ms-3">
                                 <router-link to="" class="nav-link nav-link-white-gray mx-3 mx-xl-0" href="#">Post your
