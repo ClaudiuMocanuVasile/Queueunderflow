@@ -291,7 +291,7 @@ export default {
             }
         })
             .then(response => {
-                console.table(response.data)
+                console.log(response.data)
                 this.username = response.data.username;
             });
     },

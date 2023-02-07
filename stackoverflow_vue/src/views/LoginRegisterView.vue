@@ -205,7 +205,6 @@ export default {
             axios
                 .post("/api/v1/token/login/", formData)
                 .then(response => {
-                    console.log(response.data)
                     const token = response.data.auth_token
 
                     this.$store.commit('setToken', token)
@@ -214,7 +213,7 @@ export default {
 
                     localStorage.setItem("token", token)
 
-                    const toPath = this.$route.query.to || '/home'
+                    const toPath = this.$route.query.to || '/'
 
                     this.$router.push(toPath)
                 })
