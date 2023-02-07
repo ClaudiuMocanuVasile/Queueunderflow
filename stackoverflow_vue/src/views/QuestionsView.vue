@@ -23,7 +23,9 @@
                             <!-- Question -->
                             <div class="card m-1 bg-light w-auto">
                                 <div class="card-body">
-                                    <h4><a href="#" class="text-decoration-none text-dark">{{ question.question }}</a></h4>
+                                    <div>{{ question.question }}</div>
+                                    <hr>
+                                    <button class="btn btn-secondary">See question</button>
                                 </div>
                             </div>
                         </div>
