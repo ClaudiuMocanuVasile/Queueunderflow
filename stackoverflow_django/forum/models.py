@@ -218,22 +218,21 @@ class Answer(models.Model):
 class Comment(models.Model):
     # Foreign keys
 
-    question = models.ForeignKey(Question, related_name = 'question_comments', on_delete = models.CASCADE, null = True)
     answer = models.ForeignKey(Answer, related_name = 'answer_comments', on_delete = models.CASCADE, null = True)
     queue_user = models.ForeignKey(QueueUser, related_name = 'queue_user_comments', on_delete = models.SET_NULL, null = True)
 
     # Attributes
 
     comment = models.CharField(max_length = 65535)
-    suggested_edit = models.BooleanField()
-    upvotes = models.IntegerField()
-    downvotes = models.IntegerField()
+    suggested_edit = models.BooleanField(default = False)
+    upvotes = models.IntegerField(default = 0)
+    downvotes = models.IntegerField(default = 0)
     date_posted = models.DateTimeField(auto_now_add = True)
 
     # Utility
 
     class Meta:
-        ordering = ('question', '-date_posted', )
+        ordering = ('answer', '-date_posted', )
 
     def __str__(self):
         return self.id

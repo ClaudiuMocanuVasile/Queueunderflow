@@ -30,6 +30,12 @@ class AnswersList(APIView):
         serializer = AnswerSerializer(answers, many = True)
         return Response(serializer.data)
 
+class CommentsList(APIView):
+    def get(self, request, format = None):
+        comments = Comment.objects.all()
+        serializer = CommentSerializer(comments, many = True)
+        return Response(serializer.data)
+
 class CategoriesList(APIView):
     def get(self, request, format = None):
         categories = Category.objects.all()
@@ -141,3 +147,11 @@ def edit_profile(request):
     user.save()
 
     return Response({"questions": {}})
+
+@api_view(['POST'])
+def comment(request):
+    serializer = CommentSerializer(data = request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status = status.HTTP_201_CREATED)
+    return Response(serializer.data, status = status.HTTP_400_BAD_REQUEST)
