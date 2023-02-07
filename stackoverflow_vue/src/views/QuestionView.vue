@@ -26,8 +26,8 @@
 
                     <!-- Comment textarea -->
                     <div v-if="showTextareaAnswer">
-                        <textarea class="form-control w-75" rows="5"></textarea>
-                        <button class="btn btn-dark mt-3">Submit</button>
+                        <textarea class="form-control w-75" rows="5" v-model="answer_text"></textarea>
+                        <button class="btn btn-dark mt-3" @click="sendAnswerData">Submit</button>
                     </div>
                 </div>
 
@@ -92,9 +92,11 @@ export default {
             answers: [],
             posted_by: '',
             username: '',
+            logged_user_id: '',
             date_posted: '',
             showTextareaAnswer: false,
-            showTextareaComment: false
+            showTextareaComment: false,
+            answer_text: ''
         }
 
     },
@@ -105,14 +107,8 @@ export default {
         axios.post("/api/v1/profile/", { "token": token })
             .then(response => {
                 this.username = response.data.username
-            })
-            .catch(error => {
-                console.log(JSON.stringify(error))
-            })
+                this.logged_user_id = response.data.id
 
-        axios.post("/api/v1/queue_users/", { "token": token })
-            .then(response => {
-                this.username = response.data.username
             })
             .catch(error => {
                 console.log(JSON.stringify(error))
@@ -141,6 +137,24 @@ export default {
 
         redirectToCategory() {
             window.location = `/questions/${this.categoryName}/`;
+        },
+
+        async sendAnswerData() {
+            const endpoint = '/answer/';
+            const payload = {
+                question: this.question.id,
+                answer: this.answer_text,
+                queue_user: this.logged_user_id
+            };
+
+            axios
+                .post('http://localhost:8000/api/v1/answer/', payload)
+                .then(response => {
+                    console.log(response.data);
+                })
+                .catch(error => {
+                    console.error(error);
+                });
         }
     },
     computed: {
