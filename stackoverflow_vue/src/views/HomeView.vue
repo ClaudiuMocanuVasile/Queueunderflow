@@ -3,7 +3,7 @@
         <div class="card text-bg-dark">
             <img src="https://www.brookings.edu/wp-content/uploads/2017/11/metro_20171121_tech-empowers-tech-polarizes-mark-muro.jpg"
                 class="card-img" alt="...">
-            <div class="card-img-overlay text-center" style="background:rgba(0,0,0,0.5)">
+            <div class="card-img-overlay text-center" style="background:rgba(0,0,0,0.8)">
                 <br>
                 <br>
                 <br>
@@ -15,17 +15,23 @@
                 <br>
                 <br>
                 <br>
-                <br>
-                <br>
-                <br>
 
-                <p class="card-text w-50 m-auto">Queueunderflow is a platform made by programmers, for programmers, that
+                <div class="card-text w-50 m-auto mb-5">Queueunderflow is a platform made by programmers, for
+                    programmers,
+                    that
                     wishes to accomplish knowledge exchange on a scale unbeforeseen. Users can post questions, interact
-                    with each other and reply with their own approach.</p>
+                    with each other and reply with their own approach.</div>
+
+                <br>
+                <div class="card w-25 mx-auto bg-dark mt-5">
+                    <h4 class="bg-primary p-4 text-dark">Top questions</h4>
+                    <p class="card-text p-3 text-light" v-for="question in latestQuestions.slice(0, 4)" v-bind:key="question.id"
+                        v-bind:question="question">
+                        {{ question.question }}
+                    </p>
+                </div>
             </div>
-            <p class="card-text" v-for="question in latestQuestions.slice(0, 4)" v-bind:key="question.id" v-bind:question="question">
-                cos cos cos cos cos cos cos cos cos cos cos cos cos cos cos cos cos cos cos cos cos cos cos cos cos cos cos cos cos cos cos cos cos cos cos cos cos cos
-            </p >
+
         </div>
     </div>
 

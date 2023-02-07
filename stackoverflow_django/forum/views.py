@@ -30,6 +30,12 @@ class AnswersList(APIView):
         serializer = AnswerSerializer(answers, many = True)
         return Response(serializer.data)
 
+class CommentsList(APIView):
+    def get(self, request, format = None):
+        comments = Comment.objects.all()
+        serializer = CommentSerializer(comments, many = True)
+        return Response(serializer.data)
+
 class CategoriesList(APIView):
     def get(self, request, format = None):
         categories = Category.objects.all()
@@ -49,14 +55,14 @@ class CategoryDetail(APIView):
         return Response(serializer.data)
 
 class QueueUserDetail(APIView):
-    def get_object(self, user_slug):
+    def get_object(self, id):
         try:
-            return QueueUser.objects.get(slug = user_slug)
+            return QueueUser.objects.get(id = id)
         except QueueUser.DoesNotExist:
             raise Http404
 
-    def get(self, request, user_slug, format = None):
-        user = self.get_object(user_slug)
+    def get(self, request, id, format = None):
+        user = self.get_object(id)
         serializer = QueueUserSerializer(user)
         return Response(serializer.data)
 
@@ -141,3 +147,11 @@ def edit_profile(request):
     user.save()
 
     return Response({"questions": {}})
+
+@api_view(['POST'])
+def comment(request):
+    serializer = CommentSerializer(data = request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status = status.HTTP_201_CREATED)
+    return Response(serializer.data, status = status.HTTP_400_BAD_REQUEST)
