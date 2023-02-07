@@ -2,7 +2,26 @@ from rest_framework import serializers
 
 from .models import *
 
+class  CommentSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Question
+        fields = (
+            "id",
+            "comment",
+            "get_absolute_url",
+            "queue_user",
+            "category",
+            "slug",
+            "date_posted",
+            "downvotes",
+            "upvotes",
+            
+        )
+
 class AnswerSerializer(serializers.ModelSerializer):
+    answer_comments = CommentSerializer(many = True)
+
     class Meta:
         model = Answer
         fields = (
@@ -10,7 +29,8 @@ class AnswerSerializer(serializers.ModelSerializer):
             "question",
             "queue_user",
             "answer",
-            "date_posted"
+            "date_posted",
+            "answer_comments",
             
         )
 
@@ -28,7 +48,7 @@ class QuestionSerializer(serializers.ModelSerializer):
             "category",
             "slug",
             "date_posted",
-            "answers"
+            "answers",
             
         )
 

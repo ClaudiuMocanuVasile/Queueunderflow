@@ -1,6 +1,6 @@
 <template>
     <div class="question-box">
-
+       
     </div>
 </template>
 
