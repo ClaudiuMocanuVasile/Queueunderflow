@@ -25,7 +25,7 @@
                                 <div class="mx-2 d-flex justify-content-end d-xl-none mt-xl-0 mt-2">
                                     <div>
                                         <span class="me-2">
-                                            Hello, Cermergatorul
+                                            Hello, {{ username }}
                                         </span>
                                         <i class="bi bi-person" style="font-size: 1.5rem;"></i>
                                     </div>

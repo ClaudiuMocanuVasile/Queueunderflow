@@ -23,9 +23,7 @@
                             <!-- Question -->
                             <div class="card m-1 bg-light w-auto">
                                 <div class="card-body">
-                                    <div>{{ question.question }}</div>
-                                    <hr>
-                                    <button class="btn btn-secondary">See question</button>
+                                    <div><a :href="`/questions/${categoryName}/${question.slug}`" class="text-decoration-none text-dark">{{ question.question }}</a></div>
                                 </div>
                             </div>
                         </div>
@@ -58,6 +56,11 @@ export default {
                 this.questions = response.data.questions;
             });
 
+    },
+    methods: {
+        redirectToQuestion() {
+            window.location = `http://localhost:8000/api/v1/questions/${this.categoryName}/${this.question.slug}`;
+        }
     }
 }
 </script>

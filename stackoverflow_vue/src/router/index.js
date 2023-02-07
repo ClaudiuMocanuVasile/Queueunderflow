@@ -23,7 +23,7 @@ const routes = [
     component: LoginRegisterView
   },
   {
-    path: '/:category_slug/:id/',
+    path: '/questions/:category_slug/:question_slug/',
     name: 'Question',
     component: QuestionView
   },
