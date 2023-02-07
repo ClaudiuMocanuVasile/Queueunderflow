@@ -55,14 +55,14 @@ class CategoryDetail(APIView):
         return Response(serializer.data)
 
 class QueueUserDetail(APIView):
-    def get_object(self, user_slug):
+    def get_object(self, id):
         try:
-            return QueueUser.objects.get(slug = user_slug)
+            return QueueUser.objects.get(id = id)
         except QueueUser.DoesNotExist:
             raise Http404
 
-    def get(self, request, user_slug, format = None):
-        user = self.get_object(user_slug)
+    def get(self, request, id, format = None):
+        user = self.get_object(id)
         serializer = QueueUserSerializer(user)
         return Response(serializer.data)
 
