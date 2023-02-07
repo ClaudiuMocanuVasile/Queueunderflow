@@ -43,7 +43,8 @@
                                 <div class="card-body">
 
                                     <div class="my-3 d-flex bg-danger text-white p-2">
-                                        <div>Answered</div>
+                                        <div>Answered: </div>
+                                        <div class="ms-4">User {{ answer.queue_user }}</div>
                                         <div class="ms-4">{{ new Date(answer.date_posted).toLocaleDateString() }}</div>
                                         <div class="ms-4">{{ new Date(answer.date_posted).toLocaleTimeString() }}</div>
                                     </div>
@@ -53,7 +54,8 @@
 
                                     <div>
                                         <!-- Add comment -->
-                                        <div class="pt-2 pb-3 text-danger" @click="showTextareaComment = !showTextareaComment">
+                                        <div class="pt-2 pb-3 text-danger"
+                                            @click="showTextareaComment = !showTextareaComment">
                                             <a style="cursor: pointer;">Add comment</a>
                                         </div>
 
@@ -101,6 +103,14 @@ export default {
 
         const token = localStorage.getItem('token');
         axios.post("/api/v1/profile/", { "token": token })
+            .then(response => {
+                this.username = response.data.username
+            })
+            .catch(error => {
+                console.log(JSON.stringify(error))
+            })
+
+        axios.post("/api/v1/queue_users/", { "token": token })
             .then(response => {
                 this.username = response.data.username
             })
