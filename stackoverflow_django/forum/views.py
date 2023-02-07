@@ -121,12 +121,13 @@ def answer(request):
     # "answer" : "You can use the STL stack container class, which implements a stack on top of other container classes like vector, deque, etc.",
     # "queue_user": "2"
     # }
-
-    serializer = AnswerSerializer(data = request.data)
-    if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data, status = status.HTTP_201_CREATED)
-    return Response(serializer.data, status = status.HTTP_400_BAD_REQUEST)
+    question = Question.objects.get(id = request.data['question'])
+    queue_user = QueueUser.objects.get(id = request.data['queue_user'])
+    answer = Answer(answer = request.data['answer'], question = question, queue_user = queue_user)
+    answer.save()
+    serializer = QuestionSerializer(question)
+    print(serializer.data)
+    return Response({"questions":{}})
 
 @api_view(['POST'])
 def profile(request):
