@@ -285,15 +285,13 @@ export default {
     },
     mounted() {
         const token = localStorage.getItem('token');
-        axios.get('http://localhost:8000/api/v1/users', {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        })
+        axios.post("/api/v1/profile/", { "token": token })
             .then(response => {
-                console.log(response.data)
-                this.username = response.data.username;
-            });
+                this.username = response.data.username
+            })
+            .catch(error => {
+                console.log(JSON.stringify(error))
+            })
     },
     methods: {
         logout() {
