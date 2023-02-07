@@ -155,6 +155,24 @@ export default {
                 .catch(error => {
                     console.error(error);
                 });
+        },
+        
+        async sendCommentData() {
+            const endpoint = '/answer/';
+            const payload = {
+                answer: this.answer.id,
+                comment: this.answer_text,
+                queue_user: this.logged_user_id
+            };
+            console.log(payload)
+            axios
+                .post('http://localhost:8000/api/v1/comment/', payload)
+                .then(response => {
+                    console.log(response.data);
+                })
+                .catch(error => {
+                    console.error(error);
+                });
         }
     },
     computed: {
